@@ -94,7 +94,7 @@ exports.signup = async (req, res) => {
     if (existingUser) {
       return res.status(400).json({
         success: false,
-        message: "User already exists. Please sign in to continue.",
+        message: "User already exists. Please login in to continue.",
       })
     }
 
@@ -107,7 +107,7 @@ exports.signup = async (req, res) => {
         success: false,
         message: "The OTP is not valid",
       })
-    } else if (otp !== response[0].otp) {
+    } else if (otp !== response.otp) {
       // Invalid OTP
       return res.status(400).json({
         success: false,
@@ -192,7 +192,7 @@ exports.login = async (req, res) => {
 
       // Save token to user document in database
       user.token = token
-      user.password = undefined
+      user.password = undefined          
       // Set cookie for token and return success response
       const options = {
         expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
