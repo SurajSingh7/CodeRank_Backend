@@ -1,13 +1,10 @@
-
-const Otp = require("../models/OTP.JS");
 const User = require("../models/User");
 const otpGenerator = require("otp-generator");
 const bcrypt=require("bcrypt");
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
+const Otp = require("../models/Otp");
+
 require("dotenv").config()
-
-
-
 
 // Send OTP For Email Verification
 exports.sendotp = async (req, res) => {
@@ -43,7 +40,8 @@ exports.sendotp = async (req, res) => {
         upperCaseAlphabets: false,
         lowerCaseAlphabets: false,
         specialChars: false,
-      })
+      });
+      result = await Otp.findOne({ otp: otp });
     }
     
     const otpPayload = { email, otp }
